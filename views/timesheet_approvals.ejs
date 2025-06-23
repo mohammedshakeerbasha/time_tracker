@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Timesheets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-5">
+
+    <h2 class="mb-4">📝 Pending Timesheets</h2>
+
+    <% if (timesheets.length === 0) { %>
+        <p>No pending timesheets found.</p>
+    <% } else { %>
+        <% timesheets.forEach(sheet => { %>
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><%= sheet.user.name %> (<%= sheet.user.role %>)</h5>
+                    <p class="card-text">Week Starting: <strong><%= new Date(sheet.weekStart).toDateString() %></strong></p>
+                    
+                    <form action="/timesheets/<%= sheet._id %>/approve" method="POST" class="d-inline">
+                        <button class="btn btn-success">✅ Approve</button>
+                    </form>
+                    <form action="/timesheets/<%= sheet._id %>/reject" method="POST" class="d-inline">
+                        <button class="btn btn-danger">❌ Reject</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    <% } %>
+
+    <a href="/dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+
+</body>
+</html>

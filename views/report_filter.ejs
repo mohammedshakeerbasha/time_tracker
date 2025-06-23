@@ -1,0 +1,17 @@
+<h2>Generate Report</h2>
+<form action="/reports/view" method="POST">
+    <label>User:</label>
+    <select name="user" required>
+        <% users.forEach(u => { %>
+            <option value="<%= u._id %>"><%= u.name %> (<%= u.role %>)</option>
+        <% }) %>
+    </select><br>
+
+    <label>From:</label>
+    <input type="date" name="fromDate" required><br>
+    <label>To:</label>
+    <input type="date" name="toDate" required><br>
+
+    <button type="submit">View Report</button>
+</form>
+<a href="/dashboard">Back to Dashboard</a>

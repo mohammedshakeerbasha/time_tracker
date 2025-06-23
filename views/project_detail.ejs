@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= project.name %> - Tracket</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+  <a href="/projects" class="btn btn-outline-secondary mb-3">⬅ Back to Projects</a>
+
+  <div class="mb-4">
+    <h2><%= project.name %></h2>
+    <p class="text-muted"><%= project.description %></p>
+  </div>
+
+  <div class="mb-5">
+    <h4>Tasks</h4>
+    <% if (tasks.length > 0) { %>
+      <ul class="list-group">
+        <% tasks.forEach(task => { %>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+              <strong><%= task.title %></strong><br>
+              <small class="text-muted">
+                <% if (task.assignedTo) { %>
+                  Assigned to: <%= users.find(u => u._id.toString() === task.assignedTo.toString())?.name %>
+                <% } %>
+              </small>
+            </div>
+            <a href="/tasks/<%= task._id %>/logtime" class="btn btn-sm btn-outline-success">⏱ Log Time</a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No tasks yet.</p>
+    <% } %>
+  </div>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <h4 class="card-title mb-4">Add Task</h4>
+      <form action="/projects/<%= project._id %>/tasks" method="POST">
+        <div class="mb-3">
+          <input type="text" name="title" placeholder="Task title" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <textarea name="description" placeholder="Task description" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+          <select name="assignedTo" class="form-select">
+            <option value="">-- Assign To --</option>
+            <% users.forEach(user => { %>
+              <option value="<%= user._id %>"><%= user.name %> (<%= user.role %>)</option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="mb-3">
+          <select name="parentTask" class="form-select">
+            <option value="">-- Is this a sub-task? --</option>
+            <% tasks.forEach(task => { %>
+              <option value="<%= task._id %>"><%= task.title %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

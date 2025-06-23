@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Projects - Tracket</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>All Projects</h2>
+      <a href="/dashboard" class="btn btn-outline-secondary">⬅ Back to Dashboard</a>
+    </div>
+
+    <a href="/projects/new" class="btn btn-success mb-3">➕ New Project</a>
+
+    <ul class="list-group shadow">
+      <% projects.forEach(project => { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <strong><%= project.name %></strong>
+          <a href="/projects/<%= project._id %>" class="btn btn-sm btn-outline-primary">Open</a>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</body>
+</html>
